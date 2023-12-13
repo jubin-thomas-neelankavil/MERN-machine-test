@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { addUser } from '../redux/userSlice'
+import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 const Container = styled("div")`
@@ -31,7 +31,7 @@ const defaultValue = {
   address2: "",
   state: "",
   city: "",
-  country: "",
+  country: [],
   zipcode: "",
 };
 
@@ -44,7 +44,7 @@ const Adduser = () => {
   const [states, setStates] = useState([]);
   const [countries, setCountries] = useState([]);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Fetch states and countries data here
@@ -100,9 +100,11 @@ const Adduser = () => {
           setErrorMessage("");
           setUser({ ...user, [name]: value.trim() });
         }
-      } else if (name === "state" || name === "city" || name === "country") {
+      } else if (name === "state" || name === "city" ) {
         setErrorMessage("");
         setUser({ ...user, [name]: value });
+      } else if (name === "country") {
+        setUser({ ...user, country: Array.isArray(value) ? value : [value] });
       } else if (name === "zipCode") {
         if (!value.trim()) {
           setErrorMessage("Zip Code is required");
@@ -125,7 +127,7 @@ const Adduser = () => {
     try {
       const resp = await axios.post("http://localhost:8000/add", user);
       console.log("API Response:", resp.data);
-      dispatch(addUser(resp.data))
+      dispatch(addUser(resp.data));
       navigate("/all");
     } catch (error) {
       setErrorMessage("Something went wrong");
@@ -160,7 +162,6 @@ const Adduser = () => {
         <InputLabel>Address 2</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="address2" />
       </FormControl>
-      
 
       <FormControl>
         <InputLabel>State</InputLabel>
@@ -173,19 +174,22 @@ const Adduser = () => {
       </FormControl>
 
       <FormControl>
-        <InputLabel>Country</InputLabel>
-        <Select
-          onChange={(e) => onValueChange(e)}
-          name="country"
-          value={countries}
-        >
-          {countries?.map((country) => (
-            <MenuItem key={country.cca3} value={country.name.common}>
-              <div>{country.name.common}</div>
-            </MenuItem>
-          ))}
-        </Select>
+  <InputLabel>Country</InputLabel>
+  <Select
+    multiple  // Allow multiple selections
+    onChange={(e) => onValueChange(e)}
+    name="country"
+    value={user.country}  // Use user.countries as the value
+  >
+    {countries?.map((country) => (
+      <MenuItem key={country.cca3} value={country.name.common}>
+        {country.name.common}
+      </MenuItem>
+    ))}
+  </Select>
       </FormControl>
+      
+
       <FormControl>
         <InputLabel>Zip Code</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="zipcode" />

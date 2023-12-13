@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const CodeForInterview  = () => {
-  return (
-    <p>Project For Assignment  </p>
-  )
-}
+const CodeForInterview = () => {
+  return <p>Project For Assignment </p>;
+};
 
-export default CodeForInterview 
+export default CodeForInterview;
