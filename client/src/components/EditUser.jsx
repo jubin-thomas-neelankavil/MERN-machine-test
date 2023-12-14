@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   FormControl,
   FormGroup,
@@ -7,37 +8,33 @@ import {
   styled,
   Button,
 } from "@mui/material";
-import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../redux/userSlice";
 
-const Container = styled(FormGroup)`
-width: 50%;
-    margin: 5% 0 0 25%;
-    & > div {
-        margin-top: 20px;
-`;
+const Container = styled(FormGroup)({
+  width: "50%",
+  margin: "5% auto",
+  padding: "20px",
+  border: "1px solid #ccc",
+  borderRadius: "8px",
+  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+});
 
-// const defaultValue = {
-//     firstname: "",
-//     lastname: "",
-//     email: "",
-//     phone: "",
-//     address1: "",
-//     address2: "",
-//     state: "",
-//     city: "",
-//     country: "",
-//     zipcode: ""
-// }
+const FormField = styled(FormControl)({
+  marginBottom: "20px",
+  width: "100%",
+});
+
+const StyledButton = styled(Button)({
+  width: "100%",
+  marginTop: "20px",
+});
 
 const EditUser = () => {
   const [user, setUser] = useState({});
   const { id } = useParams();
-  // const users = useSelector(state => state.users.users)
-  // const data = users.find(u => u.id === id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -57,10 +54,9 @@ const EditUser = () => {
   const onValueChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
-    // setUser({ ...user, ...data})
   };
 
-  const EditUserDetails = async () => {
+  const editUserDetails = async () => {
     try {
       await axios.put(`http://localhost:8000/${id}`, user);
       dispatch(updateUser({ id, user }));
@@ -72,96 +68,107 @@ const EditUser = () => {
 
   return (
     <Container>
-      <Typography variant="h4">Edit User</Typography>
-      <FormControl>
+      <Typography variant="h4" align="center">
+        Edit User
+      </Typography>
+
+      <FormField>
         <InputLabel>First Name</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="firstname"
-          value={user.firstname}
+          value={user.firstname || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Last Name</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="lastname"
-          value={user.lastname}
+          value={user.lastname || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Email</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="email"
-          value={user.email}
+          value={user.email || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Phone</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="phone"
-          value={user.phone}
+          value={user.phone || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Address 1</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="address1"
-          value={user.address1}
+          value={user.address1 || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Address 2</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="address2"
-          value={user.address2}
+          value={user.address2 || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>State</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="state"
-          value={user.state}
+          value={user.state || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>City</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="city"
-          value={user.city}
+          value={user.city || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Country</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="country"
-          value={user.country}
+          value={user.country || ""}
         />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Zip Code</InputLabel>
         <Input
           onChange={(e) => onValueChange(e)}
           name="zipcode"
-          value={user.zipcode}
+          value={user.zipcode || ""}
         />
-      </FormControl>
-      <FormControl>
-        <Button
-          variant="contained"
-          onClick={() => EditUserDetails()}
-          color="primary"
-        >
-          Edit User
-        </Button>
-      </FormControl>
+      </FormField>
+
+      <StyledButton
+        variant="contained"
+        onClick={() => editUserDetails()}
+        color="primary"
+      >
+        Edit User
+      </StyledButton>
     </Container>
   );
 };

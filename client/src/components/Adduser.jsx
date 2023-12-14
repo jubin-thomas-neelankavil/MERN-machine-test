@@ -16,10 +16,27 @@ import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 
 const Container = styled("div")`
-width: 50%;
-    margin: 5% 0 0 25%;
-    & > div {
-        margin-top: 20px;
+  width: 50%;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const FormField = styled(FormControl)`
+  margin-bottom: 20px;
+  width: 100%;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const ErrorMessage = styled(Typography)`
+  color: #f44336;
+  margin-top: 10px;
 `;
 
 const defaultValue = {
@@ -103,9 +120,13 @@ const Adduser = () => {
       } else if (name === "state" || name === "city" ) {
         setErrorMessage("");
         setUser({ ...user, [name]: value });
+        
+
       } else if (name === "country") {
         setUser({ ...user, country: Array.isArray(value) ? value : [value] });
-      } else if (name === "zipCode") {
+
+
+      }else if (name === "zipCode") {
         if (!value.trim()) {
           setErrorMessage("Zip Code is required");
         } else if (isNaN(value)) {
@@ -137,72 +158,81 @@ const Adduser = () => {
 
   return (
     <Container>
-      <Typography variant="h4">Add User</Typography>
-      <FormControl>
+      <Typography variant="h4" align="center">
+        Add User
+      </Typography>
+
+      <FormField>
         <InputLabel>First Name</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="firstname" />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Last Name</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="lastname" />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Email</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="email" />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Phone</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="phone" />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Address 1</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="address1" />
-      </FormControl>
-      <FormControl>
+      </FormField>
+
+      <FormField>
         <InputLabel>Address 2</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="address2" />
-      </FormControl>
+      </FormField>
 
-      <FormControl>
+      <FormField>
         <InputLabel>State</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="state" />
-      </FormControl>
+      </FormField>
 
-      <FormControl>
+      <FormField>
         <InputLabel>City</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="city" />
-      </FormControl>
+      </FormField>
 
-      <FormControl>
-  <InputLabel>Country</InputLabel>
-  <Select
-    multiple  // Allow multiple selections
-    onChange={(e) => onValueChange(e)}
-    name="country"
-    value={user.country}  // Use user.countries as the value
-  >
-    {countries?.map((country) => (
-      <MenuItem key={country.cca3} value={country.name.common}>
-        {country.name.common}
-      </MenuItem>
-    ))}
-  </Select>
-      </FormControl>
-      
+      <FormField>
+        <InputLabel>Country</InputLabel>
+        <Select
+          multiple
+          onChange={(e) => onValueChange(e)}
+          name="country"
+          value={user.country}
+        >
+          {countries?.map((country) => (
+            <MenuItem key={country.cca3} value={country.name.common}>
+              {country.name.common}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormField>
 
-      <FormControl>
+      <FormField>
         <InputLabel>Zip Code</InputLabel>
         <Input onChange={(e) => onValueChange(e)} name="zipcode" />
-      </FormControl>
-      <FormControl>
-        <Button variant="contained" onClick={addUserDetails} color="primary">
-          Add User
-        </Button>
-      </FormControl>
+      </FormField>
+
+      <StyledButton
+        variant="contained"
+        onClick={addUserDetails}
+        color="primary"
+      >
+        Add User
+      </StyledButton>
+
       {errorMessage && (
-        <Typography variant="body2" color="error">
-          {errorMessage}
-        </Typography>
+        <ErrorMessage variant="body2">{errorMessage}</ErrorMessage>
       )}
     </Container>
   );

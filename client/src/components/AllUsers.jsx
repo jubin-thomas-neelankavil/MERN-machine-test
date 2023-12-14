@@ -1,108 +1,128 @@
+import React, { useEffect } from "react";
 import {
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
-  styled,
+  Paper,
   Button,
+  Typography,
+  styled,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../redux/userSlice";
-import { deleteUser } from "../redux/userSlice";
+import { getUser, deleteUser } from "../redux/userSlice";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-const StyledTable = styled(Table)`
-  width: 90%;
-  margin: 50px 0 0 50px;
-`;
+const StyledPaper = styled(Paper)({
+  width: "90%",
+  margin: "50px auto",
+  overflow: "auto",
+});
 
-const THead = styled(TableRow)`
-  & > th {
-    font-size: 20px;
-    background: #000000;
-    color: #ffffff;
-  }
-`;
+const StyledTable = styled(Table)({
+  minWidth: 650,
+});
+
+const THead = styled(TableRow)({
+  "& > th": {
+    fontSize: 16,
+    fontWeight: "bold",
+    backgroundColor: "#f0f0f0",
+  },
+});
+
+const TableCellOverflow = styled(TableCell)({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+});
 
 const AllUsers = () => {
-  // const [users, setUsers] = useState([])
-
   const dispatch = useDispatch();
-  const userss = useSelector((state) => state.users.users);
+  const users = useSelector((state) => state.users.users);
 
   useEffect(() => {
     getAllUsers();
   }, []);
 
   const getAllUsers = async () => {
-    const response = await axios.get(`http://localhost:8000/all`);
-    dispatch(getUser(response.data));
+    try {
+      const response = await axios.get(`http://localhost:8000/all`);
+      dispatch(getUser(response.data));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
 
-  const deleteuserDetails = async (id) => {
-    await axios.delete(`http://localhost:8000/${id}`);
-    dispatch(deleteUser({ id }));
-    getAllUsers();
+  const deleteUserDetails = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8000/${id}`);
+      dispatch(deleteUser({ id }));
+      getAllUsers();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
   };
 
   return (
-    <StyledTable>
-      <TableHead>
-        <THead>
-          <TableCell>Id</TableCell>
-          <TableCell>First Name</TableCell>
-          <TableCell>Last Name</TableCell>
-          <TableCell>Email</TableCell>
-          <TableCell>Phone</TableCell>
-          <TableCell>Address 1</TableCell>
-          <TableCell>Address 2</TableCell>
-          <TableCell>state</TableCell>
-          <TableCell>City</TableCell>
-          <TableCell>Country</TableCell>
-          <TableCell>ZipCode</TableCell>
-          <TableCell></TableCell>
-        </THead>
-      </TableHead>
-    
-      <TableBody>
-        {userss.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell>{user.id}</TableCell>
-            <TableCell>{user.firstname}</TableCell>
-            <TableCell>{user.lastname}</TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>{user.phone}</TableCell>
-            <TableCell>{user.address1}</TableCell>
-            <TableCell>{user.address2}</TableCell>
-            <TableCell>{user.state}</TableCell>
-            <TableCell>{user.city}</TableCell>
-            <TableCell>{user.country}</TableCell>
-            <TableCell>{user.zipcode}</TableCell>
-            <TableCell>
-              <Button
-                variant="contained"
-                style={{ marginRight: 10 }}
-                component={Link}
-                to={`/edit/${user.id}`}
-              >
-                Edit
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => deleteuserDetails(user.id)}
-              >
-                Delete
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    
-    </StyledTable>
+    <StyledPaper elevation={3}>
+      <StyledTable>
+        <TableHead>
+          <THead>
+            <TableCell>Id</TableCell>
+            <TableCell>First Name</TableCell>
+            <TableCell>Last Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Address 1</TableCell>
+            <TableCell>Address 2</TableCell>
+            <TableCell>State</TableCell>
+            <TableCell>City</TableCell>
+            <TableCell>Country</TableCell>
+            <TableCell>Zip Code</TableCell>
+            <TableCell>Actions</TableCell>
+          </THead>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCellOverflow>{user.id}</TableCellOverflow>
+              <TableCellOverflow>{user.firstname}</TableCellOverflow>
+              <TableCellOverflow>{user.lastname}</TableCellOverflow>
+              <TableCellOverflow>{user.email}</TableCellOverflow>
+              <TableCellOverflow>{user.phone}</TableCellOverflow>
+              <TableCellOverflow>{user.address1}</TableCellOverflow>
+              <TableCellOverflow>{user.address2}</TableCellOverflow>
+              <TableCellOverflow>{user.state}</TableCellOverflow>
+              <TableCellOverflow>{user.city}</TableCellOverflow>
+              <TableCellOverflow>{user.country}</TableCellOverflow>
+              <TableCellOverflow>{user.zipcode}</TableCellOverflow>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  style={{ marginRight: 10 }}
+                  component={Link}
+                  to={`/edit/${user.id}`}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => deleteUserDetails(user.id)}
+                >
+                  Delete
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </StyledTable>
+    </StyledPaper>
   );
 };
 
