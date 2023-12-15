@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // }));
 
 const corsOptions = {
-  origin: 'https://mern-machine-testjubinfrontend.vercel.app',
+  origin: 'https://mern-machine-testjubinfrontend.vercel.app/',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, 
 };
