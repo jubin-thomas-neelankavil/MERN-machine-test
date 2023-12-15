@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
  const connectToDatabase = async (username,password,dbName) => {
 
-    const URL = `mongodb+srv://${username}:${password}@cluster0.hbnii2i.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+    const URL = `mongodb+srv://user2000:test234@cluster0.hbnii2i.mongodb.net/?retryWrites=true&w=majority`;
 
 try {
     
