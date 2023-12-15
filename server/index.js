@@ -14,15 +14,16 @@ app.use(cors({
   origin: ["https://mern-machine-testjubinfrontend.vercel.app"],
   methods: ["POST", "GET"],
   credentials: true
-}));app.use("/", Routes);
+}));
 
+app.use("/", Routes);
 
-
-// Error handling middleware
+// app.js or wherever your middleware is defined
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send("Something went wrong!");
+  res.status(500).json({ error: err.message });
 });
+
 
 const port = 8000;
 
