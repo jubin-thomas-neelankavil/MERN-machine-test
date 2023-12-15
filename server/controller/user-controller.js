@@ -4,7 +4,8 @@ const User = require('../schema/user-schema');
 
 
 module.exports.get = async (req, res, next) => {
- res.send("success")
+    res.send("success");
+    next();
 }
 
 
