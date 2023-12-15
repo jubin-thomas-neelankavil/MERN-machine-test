@@ -51,7 +51,7 @@ const AllUsers = () => {
 
   const getAllUsers = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/all`);
+      const response = await axios.get('http://localhost:8000/all');
       dispatch(getUser(response.data));
     } catch (error) {
       console.error("Error fetching user data:", error);
