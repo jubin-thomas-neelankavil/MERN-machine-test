@@ -12,7 +12,7 @@ app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
   origin: ["https://mern-machine-testjubinfrontend.vercel.app"],
-  methods: ["POST", "GET", "PUT", "DELETE"],
+  methods: ["POST", "GET"],
   credentials: true
 }));app.use("/", Routes);
 
