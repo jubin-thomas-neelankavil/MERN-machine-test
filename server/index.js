@@ -11,7 +11,7 @@ dotenv.config();
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
-  origin: [""],
+  origin: ["https://deploy-mern-1whq.vercel.app"],
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));app.use("/", Routes);
