@@ -2,11 +2,11 @@ const User = require('../schema/user-schema');
 
 module.exports.adduser = async (req, res) => {
     const data = req.body;
-console.log(req.body)
+    console.log(data,"++++++++++++++++++++");
     const newuser = new User(data);
 
     try {
-      await  newuser.save();
+        await newuser.save();
         res.status(201).json({ message: 'User added successfully' });
     } catch (error) {
         console.log(error);
