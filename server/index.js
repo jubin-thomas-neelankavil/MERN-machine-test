@@ -15,7 +15,9 @@ app.use(cors({
   methods: ["POST", "GET","DELETE","PUT"],
   credentials: true
 }));
+
 // app.use(cors());
+
 
 app.use("/", Routes);
 
