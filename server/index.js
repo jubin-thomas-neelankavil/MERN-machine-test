@@ -10,8 +10,11 @@ dotenv.config();
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use("/", Routes);
+app.use(cors({
+  origin: [""],
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));app.use("/", Routes);
 
 
 
