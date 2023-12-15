@@ -4,11 +4,7 @@ const User = require('../schema/user-schema');
 
 
 module.exports.get = async (req, res, next) => {
-    try {
-        throw new Error("This is a sample error");
-    } catch (error) {
-        next(error);
-    }
+ res.send("success")
 }
 
 
