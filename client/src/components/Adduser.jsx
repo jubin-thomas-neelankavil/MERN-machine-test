@@ -146,7 +146,7 @@ const Adduser = () => {
 
   const addUserDetails = async () => {
     try {
-      const resp = await axios.post("mern-machine-testofjubin-jubins-projects.vercel.app/add", user);
+      const resp = await axios.post("https://mern-machine-testofjubin-git-master-jubins-projects.vercel.app/add", user);
       console.log("API Response:", resp.data);
       dispatch(addUser(resp.data));
       navigate("/all");
