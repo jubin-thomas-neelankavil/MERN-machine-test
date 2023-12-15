@@ -10,12 +10,12 @@ dotenv.config();
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-  origin: ["https://mern-machine-testjubinfrontend.vercel.app"],
-  methods: ["POST", "GET","DELETE","PUT"],
-  credentials: true
-}));
-// app.use(cors());
+// app.use(cors({
+//   origin: ["https://mern-machine-testjubinfrontend.vercel.app"],
+//   methods: ["POST", "GET","DELETE","PUT"],
+//   credentials: true
+// }));
+app.use(cors());
 
 app.use("/", Routes);
 
