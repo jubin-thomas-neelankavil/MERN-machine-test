@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
+axios.defaults.withCredentials = true;
 
 const Container = styled("div")`
   width: 50%;
