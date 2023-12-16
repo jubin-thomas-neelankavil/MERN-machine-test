@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
-axios.defaults.withCredentials = true;
 
 const Container = styled("div")`
   width: 50%;
@@ -147,7 +146,11 @@ const Adduser = () => {
 
   const addUserDetails = async () => {
     try {
-      const resp = await axios.post("https://mern-machine-testofjubin.vercel.app/add", user);
+     
+      const resp = await axios.post("https://mern-machine-testofjubin.vercel.app/add", user ,{withCredentials: true});
+
+      // const resp = await axios.post("http://localhost:8000/add", user ,{withCredentials: true});
+
       console.log("API Response:", resp.data);
       dispatch(addUser(resp.data));
       navigate("/all");
