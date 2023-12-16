@@ -147,7 +147,7 @@ const Adduser = () => {
   const addUserDetails = async () => {
     try {
      
-      const resp = await axios.post("https://mern-machine-testofjubin.vercel.app/add", user ,{withCredentials: true});
+      const resp = await axios.post("https://mern-machine-testofjubin.vercel.app/add", user );
 
       // const resp = await axios.post("http://localhost:8000/add", user ,{withCredentials: true});
 
