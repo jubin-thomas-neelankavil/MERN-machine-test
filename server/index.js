@@ -15,13 +15,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
+
+
+
 app.use(cors({
-  origin: "https:mern-machine-testjubinfrontend.vercel.app",
+  origin: "https://mern-machine-testjubinfrontend.vercel.app",
   methods: ["POST", "GET", "DELETE", "PUT"],
   credentials: true,
   optionsSuccessStatus: 204,
 }));
-
 
 // app.use(cors({
 //   origin: "http://localhost:3000", // Update with your frontend URL
